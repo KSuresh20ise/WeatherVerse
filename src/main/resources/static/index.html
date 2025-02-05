@@ -126,64 +126,79 @@
 
 <script>
     async function fetchWeather() {
-        const city = document.getElementById("cityInput").value.trim();
-        if (city === "") return alert("Please enter a city!");
+      const city = document.getElementById("cityInput").value.trim();
+      if (city === "") return alert("Please enter a city!");
 
-        try {
-            const response = await fetch(`/weather/${city}`);
-            const data = await response.json();
+      try {
+          const response = await fetch(`/weather/${city}`);
+          const data = await response.json();
 
-            if (!data || !data.location) {
-                alert("City not found!");
-                return;
-            }
+          if (!data || !data.location) {
+              alert("City not found!");
+              return;
+          }
 
-            document.getElementById("locationCard").innerHTML = `
-                <h5><i class="fas fa-map-marker-alt"></i> ${data.location.name}, ${data.location.region}, ${data.location.country}</h5>
-                <p>Local Time: ${data.location.localtime}</p>
-            `;
+          if (data.error && data.error.code === 104) {
+              // Display a custom message when the API usage limit is reached
+              document.getElementById("weatherCards").innerHTML = `
+                  <div class="col-12">
+                      <div class="weather-card p-3">
+                          <h5>Error</h5>
+                          <p>Your monthly API usage limit has been reached. Please upgrade your subscription plan.</p>
+                      </div>
+                  </div>
+              `;
+              return;
+          }
 
-            document.getElementById("weatherCards").innerHTML = `
-                <div class="col-md-3">
-                    <div class="weather-card p-3">
-                        <img src="${data.current.weather_icons[0]}" alt="Weather Icon" class="weather-img">
-                        <h5>Condition</h5>
-                        <p>${data.current.weather_descriptions[0]}</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="weather-card p-3">
-                        <i class="fas fa-temperature-high weather-icon"></i>
-                        <h5>Temperature</h5>
-                        <p>${data.current.temperature}°C (Feels like ${data.current.feelslike}°C)</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="weather-card p-3">
-                        <i class="fas fa-wind weather-icon"></i>
-                        <h5>Wind Speed</h5>
-                        <p>${data.current.wind_speed} km/h (${data.current.wind_dir})</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="weather-card p-3">
-                        <i class="fas fa-tint weather-icon"></i>
-                        <h5>Humidity</h5>
-                        <p>${data.current.humidity}%</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="weather-card p-3">
-                        <i class="fas fa-sun weather-icon"></i> <!-- Changed UV Index Icon -->
-                        <h5>UV Index</h5>
-                        <p>${data.current.uv_index}</p>
-                    </div>
-                </div>
-            `;
-        } catch (error) {
-            alert("Error fetching weather data. Please try again.");
-        }
-    }
+          // Display weather data if the request was successful
+          document.getElementById("locationCard").innerHTML = `
+              <h5><i class="fas fa-map-marker-alt"></i> ${data.location.name}, ${data.location.region}, ${data.location.country}</h5>
+              <p>Local Time: ${data.location.localtime}</p>
+          `;
+
+          document.getElementById("weatherCards").innerHTML = `
+              <div class="col-md-3">
+                  <div class="weather-card p-3">
+                      <img src="${data.current.weather_icons[0]}" alt="Weather Icon" class="weather-img">
+                      <h5>Condition</h5>
+                      <p>${data.current.weather_descriptions[0]}</p>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="weather-card p-3">
+                      <i class="fas fa-temperature-high weather-icon"></i>
+                      <h5>Temperature</h5>
+                      <p>${data.current.temperature}°C (Feels like ${data.current.feelslike}°C)</p>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="weather-card p-3">
+                      <i class="fas fa-wind weather-icon"></i>
+                      <h5>Wind Speed</h5>
+                      <p>${data.current.wind_speed} km/h (${data.current.wind_dir})</p>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="weather-card p-3">
+                      <i class="fas fa-tint weather-icon"></i>
+                      <h5>Humidity</h5>
+                      <p>${data.current.humidity}%</p>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="weather-card p-3">
+                      <i class="fas fa-sun weather-icon"></i> <!-- Changed UV Index Icon -->
+                      <h5>UV Index</h5>
+                      <p>${data.current.uv_index}</p>
+                  </div>
+              </div>
+          `;
+      } catch (error) {
+          alert("Error fetching weather data. Please try again.");
+      }
+  }
+
 </script>
 
 </body>

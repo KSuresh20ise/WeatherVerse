@@ -27,6 +27,14 @@ public class Weather {
     public void setCurrent(Current current) {
         this.current = current;
     }
+
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "location=" + location +
+                ", current=" + current +
+                '}';
+    }
 }
 
 // Location Class
@@ -50,6 +58,16 @@ class Location {
 
     public String getLocaltime() { return localtime; }
     public void setLocaltime(String localtime) { this.localtime = localtime; }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", region='" + region + '\'' +
+                ", localtime='" + localtime + '\'' +
+                '}';
+    }
 }
 
 // Current Weather Class
