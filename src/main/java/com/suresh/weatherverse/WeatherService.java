@@ -20,6 +20,7 @@ public class WeatherService {
 
 
 
+
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
