@@ -10,8 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class WeatherService {
-    @Autowired
-    private Environment env;
+
     @Value("${API_KEY}")
     private String apikey;
 
