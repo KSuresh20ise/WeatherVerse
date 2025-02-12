@@ -31,11 +31,11 @@ public class WeatherError {
         private int code;
         private String info;
 
-        // ✅ Default constructor
+
         public ErrorDetail() {
         }
 
-        // ✅ Constructor with parameters
+
         public ErrorDetail(int code, String info) {
             this.code = code;
             this.info = info;

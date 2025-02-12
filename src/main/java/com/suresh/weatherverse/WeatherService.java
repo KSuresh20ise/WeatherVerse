@@ -25,7 +25,6 @@ public class WeatherService {
     public Object getWeather(String city){
         try {
             String apiUrl = Base_url+apikey+"&query="+city;
-            System.out.println(apiUrl);
             String jsonResponse = restTemplate.getForObject(apiUrl,String.class);
             JsonNode rootNode = objectMapper.readTree(jsonResponse);
             if (rootNode.has("success") && !rootNode.get("success").asBoolean()){
