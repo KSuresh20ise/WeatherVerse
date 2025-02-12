@@ -2,9 +2,8 @@ package com.suresh.weatherverse;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,15 +22,20 @@ public class WeatherService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public Weather getWeather(String city){
+    public Object getWeather(String city){
         try {
             String apiUrl = Base_url+apikey+"&query="+city;
+            System.out.println(apiUrl);
             String jsonResponse = restTemplate.getForObject(apiUrl,String.class);
-            return objectMapper.readValue(jsonResponse,Weather.class);
+            JsonNode rootNode = objectMapper.readTree(jsonResponse);
+            if (rootNode.has("success") && !rootNode.get("success").asBoolean()){
+                return objectMapper.treeToValue(rootNode,WeatherError.class);
+            }
+            return objectMapper.readValue(rootNode.toString(),Weather.class);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new WeatherError(false, new WeatherError.ErrorDetail(500, "Internal Server Error"));
         }
     }
 
