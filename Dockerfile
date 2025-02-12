@@ -10,3 +10,4 @@ WORKDIR /app
 COPY --from=build /app/target/weatherverse-0.0.1-SNAPSHOT.jar weatherverse.jar
 EXPOSE 8080
 CMD ["java", "-jar", "weatherverse.jar"]
+
