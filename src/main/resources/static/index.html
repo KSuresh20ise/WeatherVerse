@@ -136,16 +136,17 @@
          }
 
          console.log("Parsed API Response:", data);
-         if (data.success === false) {
-            document.getElementById("weatherCards").innerHTML = `
-                <div class="weather-card" style="color: red;">
-                    <i class="fas fa-exclamation-circle weather-icon"></i>
-                    <h5>Error ${data.error.code}</h5>
-                    <p>${data.error.info || "Something went wrong. Please try again later."}</p>
-                </div>
-            `;
-            return;
-        }
+      if (data.success === false) {
+    let errorMessage = data.error.code === 500 ? "Invalid Location" : (data.error.info || "Something went wrong. Please try again later.");
+
+    document.getElementById("weatherCards").innerHTML = `
+        <div class="weather-card" style="color: red;">
+            <i class="fas fa-exclamation-circle weather-icon"></i>
+            <p>${errorMessage}</p>
+        </div>
+    `;
+    return;
+}
 
          if (!data || !data.location) {
              throw new Error("Invalid API response: Missing location data.");

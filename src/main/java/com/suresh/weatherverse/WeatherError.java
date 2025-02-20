@@ -56,5 +56,21 @@ public class WeatherError {
         public void setInfo(String info) {
             this.info = info;
         }
+
+        @Override
+        public String toString() {
+            return "ErrorDetail{" +
+                    "code=" + code +
+                    ", info='" + info + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "WeatherError{" +
+                "success=" + success +
+                ", error=" + error +
+                '}';
     }
 }
