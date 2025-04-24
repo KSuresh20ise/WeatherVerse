@@ -11,8 +11,8 @@
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** HTML, CSS, JavaScript *(or React/Angular if applicable)*
-- **Backend:** Java with Spring Boot *(if applicable)*
+- **Frontend:** HTML, CSS, JavaScript 
+- **Backend:** Java with Spring Boot
 - **Weather API:** WeatherStack API
 - **Data Handling:** REST APIs & JSON
 - **Tools:** IntelliJ IDEA, Git, GitHub, Postman
